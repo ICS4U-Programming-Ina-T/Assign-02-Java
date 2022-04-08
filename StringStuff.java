@@ -25,33 +25,39 @@ class StringStuff {
      */
     public static String blowup(char[] tempArray) {
         // declaring variables
-        // char[] tempArray = new char[stringValue.length()];
-        // System.out.println(tempArray);
         String newString = "";
-        int charInt = 0;
+        int charInt;
+        
+        // System.out.println(tempArray);
 
-        // adds each element of string to a char array
-        // https://www.geeksforgeeks.org/convert-a-string-to-character-array-in-java/
-        // for (int i = 0; i < stringValue.length(); i++) {
-        //     tempArray[i] = stringValue.charAt(i);
-        // }
+        for (int cursor = 0; cursor < tempArray.length - 1; cursor++) {
+            try {
+                charInt = Integer.parseInt(String.valueOf(tempArray[cursor]));
 
-        // System.out.println(tempArray.length);
-
-        for (int cursor = 0; cursor < tempArray.length; cursor++) {
-            if (tempArray[cursor] == Character.getNumericValue(tempArray[cursor])) {
-                // charInt = (int) tempArray[cursor];
-                charInt = Character.getNumericValue(tempArray[cursor]);
-                System.out.println(charInt);
-                for (int numCount = 0; numCount < charInt + 1; numCount++) {
+                for (int numCount = 0; numCount < charInt; numCount++) {
                     newString += tempArray[cursor + 1];
-                    // System.out.println(newString);
                 }
-            } else {
+
+                // if (cursor == tempArray.length - 2) {
+                //     newString += tempArray[cursor + 1];
+                // }
+
+            } catch (NumberFormatException exception) {
                 newString += tempArray[cursor];
+
+                if (tempArray.length == 1) {
+                    newString += tempArray[cursor + 1];
+                }
+                
+                if (cursor == tempArray.length - 2) {
+                    try {
+                        charInt = Integer.parseInt(String.valueOf(tempArray[cursor]));
+                    } catch (NumberFormatException exception) {
+                        newString += tempArray[cursor + 1];
+                    }
+                }
             }
         }
-        // System.out.println(newString);
         return newString;
     }
 
@@ -88,13 +94,10 @@ class StringStuff {
             for (int loopCounter = 0; loopCounter
                 < stringsArrayFile.length; loopCounter++) {
                 char[] tempArray = new char[stringsArrayFile[loopCounter].length()];
-                // System.out.println(tempArray.length);
                 for (int i = 0; i < stringsArrayFile[loopCounter].length(); i++) {
                     tempArray[i] = stringsArrayFile[loopCounter].charAt(i);
-                    // System.out.println(tempArray[i]);
 
                 }
-                // System.out.println(tempArray.length);
                 blowupStringUser = blowup(tempArray);
                 alteredList.add(blowupStringUser);
             }
