@@ -18,44 +18,66 @@ import java.util.List;
 
 class StringStuff {
     /**
-     * This function alters a string based on the numbers.  
+     * Declaring constant for console formatting.
+     */
+    private static final String CONSOLE_SEPARATOR =
+        "--------------------------";
+
+    /**
+     * This function alters a string based on the numbers.
      *
-     * @param
-     * @return
+     * @param tempArray accepted
+     * @return newString to main function
      */
     public static String blowup(char[] tempArray) {
         // declaring variables
         String newString = "";
         int charInt;
-        
-        // System.out.println(tempArray);
 
+        // determines which character(s) in the array needs to be altered
         for (int cursor = 0; cursor < tempArray.length - 1; cursor++) {
             try {
                 charInt = Integer.parseInt(String.valueOf(tempArray[cursor]));
 
+                // repeats character that is after an integer
                 for (int numCount = 0; numCount < charInt; numCount++) {
                     newString += tempArray[cursor + 1];
                 }
 
-                // if (cursor == tempArray.length - 2) {
-                //     newString += tempArray[cursor + 1];
-                // }
-
-            } catch (NumberFormatException exception) {
-                newString += tempArray[cursor];
-
-                if (tempArray.length == 1) {
-                    newString += tempArray[cursor + 1];
-                }
-                
+                // checks last character in array
                 if (cursor == tempArray.length - 2) {
                     try {
-                        charInt = Integer.parseInt(String.valueOf(tempArray[cursor]));
+                        charInt =
+                            Integer.parseInt(
+                                String.valueOf(tempArray[cursor + 1]));
                     } catch (NumberFormatException exception) {
                         newString += tempArray[cursor + 1];
                     }
                 }
+
+            } catch (NumberFormatException newException) {
+                newString += tempArray[cursor];
+
+                // checks last character in array
+                if (cursor == tempArray.length - 2) {
+                    try {
+                        charInt =
+                            Integer.parseInt(
+                                String.valueOf(tempArray[cursor + 1]));
+                    } catch (NumberFormatException exception) {
+                        newString += tempArray[cursor + 1];
+                    }
+                }
+            }
+        }
+
+        // checks if a single character is altered
+        if (tempArray.length == 1) {
+            try {
+                charInt =
+                    Integer.parseInt(String.valueOf(tempArray[0]));
+            } catch (NumberFormatException exception) {
+                newString += tempArray[0];
             }
         }
         return newString;
@@ -63,7 +85,7 @@ class StringStuff {
 
     /**
      * Main entry into the program.
-     * 
+     *
      * @param args nothing passed in
      */
     public static void main(String[] args) {
@@ -93,10 +115,11 @@ class StringStuff {
             // calls function and passes each individual element in the array
             for (int loopCounter = 0; loopCounter
                 < stringsArrayFile.length; loopCounter++) {
-                char[] tempArray = new char[stringsArrayFile[loopCounter].length()];
-                for (int i = 0; i < stringsArrayFile[loopCounter].length(); i++) {
+                final char[] tempArray =
+                    new char[stringsArrayFile[loopCounter].length()];
+                for (int i = 0; i
+                    < stringsArrayFile[loopCounter].length(); i++) {
                     tempArray[i] = stringsArrayFile[loopCounter].charAt(i);
-
                 }
                 blowupStringUser = blowup(tempArray);
                 alteredList.add(blowupStringUser);
@@ -105,12 +128,18 @@ class StringStuff {
             // converts list of reversed strings to an array
             alteredStringsArray = alteredList.toArray(new String[0]);
 
+            // displays message
+            System.out.println("Done altering strings."
+                + "Look below and check the output file.");
+            System.out.println(CONSOLE_SEPARATOR);
+
             // adds the new reversed strings to the output file
             builder = new StringBuilder();
             for (int formatCounter = 0; formatCounter
                 < alteredStringsArray.length; ++formatCounter) {
                 builder.append(alteredStringsArray[formatCounter]);
                 if (formatCounter != alteredStringsArray.length - 1) {
+                    System.out.println(alteredStringsArray[formatCounter]);
                     builder.append("\n");
                 }
             }
@@ -123,8 +152,7 @@ class StringStuff {
             writer.write(builder.toString());
             writer.close();
 
-            // displays alert saying the strings have been reversed
-            System.out.println("Done altering strings. Check the output file.");
+            System.out.println(CONSOLE_SEPARATOR);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
