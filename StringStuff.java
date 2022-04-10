@@ -8,8 +8,9 @@ import java.util.List;
 
 /**
  * The StringStuff program implements an application that
- * uses a function to alter the contents of a string based
- * on the number characters present.
+ * uses a function to alter the contents of a string and
+ * returns a version of the original string passed as
+ * as an argument.
  *
  * @author  Ina Tolo
  * @version 1.0
@@ -24,7 +25,7 @@ class StringStuff {
         "--------------------------";
 
     /**
-     * This function alters a string based on the numbers.
+     * This function alters the arrangement of a string.
      *
      * @param tempArray accepted
      * @return newString to main function
@@ -89,9 +90,6 @@ class StringStuff {
      * @param args nothing passed in
      */
     public static void main(String[] args) {
-        System.out.println("The strings in the input file will be reversed.");
-        System.out.println();
-
         // declaring variables
         List<String> listOftrings = new ArrayList<String>();
         final String[] stringsArrayFile;
@@ -100,6 +98,9 @@ class StringStuff {
         final StringBuilder builder;
         final List<String> alteredList = new ArrayList<String>();
         String blowupStringUser;
+
+        System.out.println("The strings in the input file will be altered.");
+        System.out.println();
 
         // reads contents of file into list
         try {
@@ -112,7 +113,7 @@ class StringStuff {
         stringsArrayFile = listOftrings.toArray(new String[0]);
 
         try {
-            // calls function and passes each individual element in the array
+            // calls function and passes each element in the array
             for (int loopCounter = 0; loopCounter
                 < stringsArrayFile.length; loopCounter++) {
                 final char[] tempArray =
@@ -125,15 +126,15 @@ class StringStuff {
                 alteredList.add(blowupStringUser);
             }
 
-            // converts list of reversed strings to an array
+            // converts list of altered strings to an array
             alteredStringsArray = alteredList.toArray(new String[0]);
 
-            // displays message
+            // displays message that alerts user file is done being altered
             System.out.println("Done altering strings."
-                + "Look below and check the output file.");
+                + " Look below and check the output file.");
             System.out.println(CONSOLE_SEPARATOR);
 
-            // adds the new reversed strings to the output file
+            // adds the new altered strings to the output file
             builder = new StringBuilder();
             for (int formatCounter = 0; formatCounter
                 < alteredStringsArray.length; ++formatCounter) {
